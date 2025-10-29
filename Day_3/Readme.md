@@ -10,7 +10,7 @@ It continuously drives a value onto a **net** (typically a `wire`). Whenever any
 
 ```verilog
 assign <net> = <expression>;
-🔁 How Continuous Assignment Works
+## 🔁 How Continuous Assignment Works
 
 Monitoring
 The simulator continuously monitors all signals (RHS) in the expression.
