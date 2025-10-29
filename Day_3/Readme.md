@@ -5,11 +5,6 @@ A **Continuous Assignment** in Verilog is used to model **combinational logic**.
 It continuously drives a value onto a **net** (typically a `wire`). Whenever any signal on the right-hand side (RHS) changes, the left-hand side (LHS) net is automatically updated.
 
 ---
-
-## ⚙️ Syntax
-
-```verilog
-assign <net> = <expression>;
 ## 🔁 How Continuous Assignment Works
 
 ### 🧠 Monitoring
@@ -25,4 +20,9 @@ a simulation mechanism that represents **zero time delay** but ensures **ordered
 ### ⚡ Continuous Driving
 The `assign` statement **continuously drives** the target signal.  
 You **don’t need to reassign** it manually inside procedural blocks.
+
+## ⚙️ Syntax
+
+```verilog
+assign <net> = <expression>;
 
