@@ -11,3 +11,9 @@ signals is deasserted.
 /*In Verilog, system tasks like $display, $monitor, $finish, etc.
 must be executed as part of procedural code, not in the declaration area.
 If you do => Syntax Error*/
+
+module AND(output y,
+            input req,ack);
+       assign y = req & ack;
+endmodule
+
