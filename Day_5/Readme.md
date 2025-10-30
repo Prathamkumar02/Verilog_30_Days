@@ -1,24 +1,37 @@
-# 🧩 Procedural Non-Blocking — Concepts, Formats & Evaluation
+# ⚙️ Procedural Non-Blocking in Verilog
 
-## 🚀 Overview
+## 🧩 Overview
 
-**Procedural Non-Blocking** refers to a programming approach where procedural (step-by-step) code executes without **blocking** the main thread while waiting for slow operations such as **I/O, network requests, or disk reads**.
+In **Verilog**, *procedural non-blocking assignments* (`<=`) are used inside `always` blocks to model **sequential logic** and ensure that **all right-hand side (RHS)** values are evaluated **before** any assignments are updated.  
 
-Instead of pausing execution, non-blocking procedures allow other tasks to continue, improving responsiveness and throughput — especially in **concurrent, asynchronous, or event-driven** systems.
+This avoids unwanted race conditions and correctly represents clocked (synchronous) hardware behavior.
 
 ---
 
-## ⚙️ Typical Formats
+## 🔁 Blocking vs Non-Blocking Assignments
 
-### 1. **Callbacks (Event-driven)**
+| Type | Symbol | Execution | Typical Use |
+|------|---------|------------|--------------|
+| **Blocking** | `=` | Executes immediately (statement by statement) | Combinational logic |
+| **Non-Blocking** | `<=` | RHS evaluated first; updates happen *together* at the end of the time step | Sequential (clocked) logic |
 
-```js
-const fs = require('fs');
+---
 
-function readFileNonBlocking() {
-  fs.readFile('data.txt', 'utf8', (err, data) => {
-    if (err) throw err;
-    console.log('File data:', data);
-  });
-  console.log('Read request issued.'); // Executes immediately (non-blocking)
-}
+## 🧠 Simple Example
+
+```verilog
+module non_blocking_example (
+    input  wire clk,
+    input  wire [3:0] a,
+    input  wire [3:0] b,
+    output reg  [3:0] x,
+    output reg  [3:0] y
+);
+
+  always @(posedge clk) begin
+    x <= a;   // Non-blocking assignment
+    y <= x;   // Reads old value of x (from previous clock)
+  end
+
+endmodule
+
