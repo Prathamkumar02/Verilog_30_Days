@@ -1,1 +1,46 @@
 
+`timescale 1ns/1ps
+
+module tb_Register;
+
+  // Testbench signals
+  reg clk;
+  reg data_in;
+  wire data_out;
+
+  // Instantiate the DUT (Design Under Test)
+  Register uut (
+    .clk(clk),
+    .data_in(data_in),
+    .data_out(data_out)
+  );
+
+  // Clock generation: 10 ns period (100 MHz)
+  initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+  end
+
+  // Apply stimulus
+  initial begin
+    // Initialize input
+    data_in = 0;
+
+    // Display header
+    $display("Time(ns)\tclk\tdata_in\tdata_out");
+
+    // Monitor signals continuously
+    $monitor("%0t\t%b\t%b\t%b", $time, clk, data_in, data_out);
+
+    // Stimulus pattern
+    #10 data_in = 1;   // After 10 ns
+    #10 data_in = 0;   // After 20 ns
+    #10 data_in = 1;   // After 30 ns
+    #15 data_in = 0;   // After 45 ns
+    #10 data_in = 1;   // After 55 ns
+
+    // Run for a bit longer, then finish
+    #30 $finish;
+  end
+
+endmodule
